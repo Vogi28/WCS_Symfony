@@ -7,8 +7,10 @@
     </head>
     <body>
     <header>
-        {% block header %}{% include "Wild/navbar.html.twig" %}{% endblock %}
+        {% include "Wild/navbar.html.twig" %}
+    {% block header %}{% endblock %}
     </header>
+
     {% block welcome %}{% endblock %}
         {% block body %}{% endblock %}
         {% block javascripts %}{{ encore_entry_script_tags('app') }}{% endblock %}
