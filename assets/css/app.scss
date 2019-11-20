@@ -1,0 +1,16 @@
+@import "~bootstrap/scss/bootstrap";
+
+$bodyColor: #f3f3f3;
+$navBarColor: #CAF8ED;
+
+body {
+    background-color: $bodyColor;
+}
+
+.navbar{
+    background-color: $navBarColor;
+    font-family: 'Calligraffitti';
+    font-size: 1.7em;
+    // font-family: 'Indie Flower', cursive;
+;
+}
