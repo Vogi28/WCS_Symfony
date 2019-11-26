@@ -46,17 +46,7 @@ class WildController extends AbstractController
    */
    public function show(?string $slug): Response
    {
-        // if($slug !== null)
-        // {
-        //     $slug = str_replace('-', ' ', $slug);
-        //     $slug = ucwords($slug,' ');
-        // }
-        // else
-        // {
-        //     $slug = "Aucune série sélectionnée, veuillez choisir une série";    
-        // }
-        // return $this->render('Wild/show.html.twig', ['slug' => $slug]);
-
+    
         if (!$slug) {
             throw $this
                 ->createNotFoundException('No slug has been sent to find a program in program\'s table.');
