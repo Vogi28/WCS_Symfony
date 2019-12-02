@@ -9,6 +9,10 @@
   <div class="media-body">
     <h1 class="mt-0">{{ program.title }}</h1>
     <p>{{ program.summary }}</p>
+    {% for season in seasons %}
+      <a href="/Wild/showBySeason/{{ season.id }}">Saison {{ loop.index }}</a>
+      <p>{{ season.description }}</p>
+    {% endfor %}
     <p>Categorie : {{ program.category.name }}</p>
   </div>
 </div>

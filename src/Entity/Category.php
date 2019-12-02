@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Program;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints\Collection;

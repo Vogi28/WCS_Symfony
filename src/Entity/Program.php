@@ -38,7 +38,7 @@ class Program
     private $category;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Season", mappedBy="program", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Season", mappedBy="program", cascade={"persist", "remove"})
      */
     private $season;
 

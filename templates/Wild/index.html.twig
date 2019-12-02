@@ -2,32 +2,18 @@
 
 {% block title %}All programs{% endblock %}
 
-{# {% block body %}
-    <h1>Toutes les séries de la table program : </h1>
-    {% for program in programs %}
-        <div>
-            <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
-            <p>{{ program.summary }}</p>
-        </div>
-    {% else %}
-        Aucune série trouvée.
-    {% endfor %}
-    <a href="{{ path('app_index') }}">
-        Retour à l'accueil
-    </a>
-{% endblock %} #}
-
 {% block body %}
+
 <h1 class="text-center">Toutes les séries de la table program : </h1>
 <div class="container">
     <div class="row">
 {% for program in programs %} 
-    <div class="card col text-center" style="width:400px">
+    <div class="card col-3 text-center" style="width:400px">
         <img class="card-img-top" src="{{ program.poster }}" alt="{{ program.title }}">
         <div class="card-body text-center">
             <h4 class="card-title">{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h4>
             <p class="card-text">{{ program.summary }}</p>
-            <a href="#" class="btn btn-primary">Voir fiche</a>
+            <a href="show/{{ program.title }}" class="btn btn-primary">Voir fiche</a>
         </div>
     </div>
 {% endfor %}

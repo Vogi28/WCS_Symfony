@@ -17,7 +17,7 @@ class Season
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Program", inversedBy="season", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Program", inversedBy="season", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $program;
