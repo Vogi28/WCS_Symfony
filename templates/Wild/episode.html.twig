@@ -8,17 +8,14 @@
   <img class="align-self-start mr-3" src="{{program.poster}}" alt="{{ program.title }} poster">
   <div class="media-body">
     <a href="{{ path('wild_show', {'slug': program.title}) }}"><h1 class="mt-0">{{ program.title }}</h1></a>
-    <p>Saison {{ season.id }} - Année {{ season.year}}</p>
-      <p>{{ season.description }}</p>
-    <p>Categorie : {{ program.category.name }}</p>
-    <p><h3>Listes des épisodes</h3></p>
-    {% for episode in episodes %}
-        <a href="{{ path('wild_showByEpisode', {'id': episode.id}) }}">Episode {{ episode.number }} : {{ episode.title }}</a>
-        <details>
+    <a href="{{ path('wild_showBySeason', {'id': season.id}) }}">Saison {{ season.id }} - Année {{ season.year}}</a>
+      <details>
             <summary>Synopsis</summary>
-            {{ episode.synopsis}}
-        </details>
-    {% endfor %}
+      {{ season.description }}
+      </details>
+    <p>Categorie : {{ program.category.name }}</p>
+    <p><h3>Episode {{ episode.number }} : {{ episode.title }}</h3></p>
+    <p>{{ episode.synopsis}}</p>
   </div>
 </div>
 

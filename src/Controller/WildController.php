@@ -3,12 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Season;
+use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Category;
+use App\Repository\SeasonRepository;
+use App\Repository\EpisodeRepository;
 use App\Repository\ProgramRepository;
 use App\Repository\CategoryRepository;
-use App\Repository\EpisodeRepository;
-use App\Repository\SeasonRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -55,9 +56,9 @@ class WildController extends AbstractController
                 ->createNotFoundException('No slug has been sent to find a program in program\'s table.');
         }
         $slug = preg_replace(
-            '/-/',
-            ' ', ucwords(trim(strip_tags($slug)), "-")
+            '/-/', ' ', ucwords(trim(strip_tags($slug)), "-")
         );
+
         $program = $programRepository->findOneBy(['title' => mb_strtolower($slug)]);
         if (!$program) {
             throw $this->createNotFoundException(
@@ -77,26 +78,25 @@ class WildController extends AbstractController
     *
     *@Route("/showBySeason/{id}", name="wild_showBySeason")
     */
-    public function showBySeason(EpisodeRepository $episodeRepository, ProgramRepository $programRepository, SeasonRepository $seasonRepository, int $id)
+    public function showBySeason(EpisodeRepository $episodeRepository, ProgramRepository $programRepository, Season $seasonEntity)
     {
-        if(!$id)
+        if(!$seasonEntity)
         {
             throw $this->createNotFoundException(
-                'No season '.$id.' found in season\'s table.'
+                'No season '.$seasonEntity->getId().' found in season\'s table.'
             );
         }
         
-        $season = $seasonRepository->findOneById($id);
-        $episode = $episodeRepository->findBy(['season' => $id], ['id' => 'asc']);
-        $program =$programRepository->findBy(['id' => $season->getProgram()]);
+        $episode = $episodeRepository->findBy(['season' => $seasonEntity->getId()], ['id' => 'asc']);
+        $program =$programRepository->findOneById($seasonEntity->getProgram());
         
-        return $this->render('Wild/season.html.twig', ['season' => $season,
+        return $this->render('Wild/season.html.twig', ['season' => $seasonEntity,
         'program' => $program,
         'episodes' => $episode]);
     }
 
     /**
-    * @Route("/category/{categoryName<[a-z0-9\-]+>?}", name="show_category")
+    * @Route("/category/{categoryName<[a-z0-9\-]+>?}", name="wild_showByCategory")
     */
    public function category(CategoryRepository $CategoryRepository, ProgramRepository $programRepository, ?string $categoryName)
    {
@@ -124,5 +124,19 @@ class WildController extends AbstractController
             'programs' => $program,
             'category'  => $category,
         ]);
+   }
+
+   /**
+    *@Route("/showByEpisode/{id}", name="wild_showByEpisode")
+    * @param Episode $episode
+    */
+   public function showByEpisode(Episode $episodeEntity, ProgramRepository $programRepository, SeasonRepository $seasonRepository)
+   {
+       $season = $seasonRepository->findOneById($episodeEntity->getSeason());
+       $program = $programRepository->findOneById($season->getProgram());
+       
+       return $this->render('Wild/episode.html.twig', ['episode' => $episodeEntity,
+        'season' => $season,
+        'program' => $program]);
    }
 }
