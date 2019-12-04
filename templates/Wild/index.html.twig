@@ -5,21 +5,31 @@
 {% block body %}
 
 <h1 class="text-center">Toutes les séries de la table program : </h1>
-<div class="container">
+<div class="text-center">
+    {{ form_start(formProg) }}
+        {{ form_row(formProg.title) }}
+        <button type="submit" name="btnSearch">Rechercher</button>
+    {{ form_end(formProg) }}
+</div>
+
+<div class="container-full">
     <div class="row">
-{% for program in programs %} 
-    <div class="card col-3 text-center" style="width:400px">
-        <img class="card-img-top" src="{{ program.poster }}" alt="{{ program.title }}">
-        <div class="card-body text-center">
-            <h4 class="card-title">{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h4>
-            <p class="card-text">{{ program.summary }}</p>
-            <a href="show/{{ program.title }}" class="btn btn-primary">Voir fiche</a>
-        </div>
-    </div>
+{% for program in programs %}
+            <div class="card col-3 text-center" style="width:400px">
+                <a href="show/{{ program.title }}"><img class="card-img-top" src="{{ program.poster }}" alt="{{ program.title }}"></a>
+                <div class="card-body text-center">
+                    <h4 class="card-title">{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h4>
+                    <p class="card-text">{{ program.summary }}</p>
+                    <a href="show/{{ program.title }}" class="btn btn-primary">Voir fiche</a>
+                </div>
+            </div>
 {% endfor %}
     </div>
 </div>
-<a href="{{ path('wild_index') }}">
+<div class="text-center">
+
+    
+<a class="text-center" href="{{ path('wild_index') }}">
     Retour à l'index
 </a>
 {% endblock %}

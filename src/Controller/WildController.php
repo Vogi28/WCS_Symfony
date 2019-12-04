@@ -5,11 +5,12 @@ namespace App\Controller;
 use App\Entity\Season;
 use App\Entity\Episode;
 use App\Entity\Program;
-use App\Entity\Category;
+use App\Form\ProgramSearchType;
 use App\Repository\SeasonRepository;
 use App\Repository\EpisodeRepository;
 use App\Repository\ProgramRepository;
 use App\Repository\CategoryRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,23 +26,41 @@ class WildController extends AbstractController
      * @Route("/", name="wild_index")
      * @return Response A response instance
      */
-    public function index(ProgramRepository $programRepository) :Response
+    public function index(ProgramRepository $programRepository, Request $request) :Response
     {
-        // return $this->render('Wild/index.html.twig', [
-        //     'website' => 'Wild Séries'
-        // ]);
-
+        $prog = new Program();
+        $formProg = $this->createForm(
+            ProgramSearchType::class, 
+            $prog, 
+            ['method' => Request::METHOD_GET]);
+        $formProg->handleRequest($request);
+        
         $programs = $programRepository->findAll();
 
-      if (!$programs) {
+        if (!$programs) {
           throw $this->createNotFoundException(
           'No program found in program\'s table.'
           );
-      }
+        }
 
-      return $this->render(
+        if ($formProg->isSubmitted()) {
+            $data = $formProg->getData();
+            $program = $programRepository->findOneByTitle($data->getTitle());
+            
+            
+            return $this->render(
+                'Wild/index.html.twig',
+                ['programs' => $program,
+                'formProg' => $formProg->createView()
+              ]
+            );
+        }
+
+        return $this->render(
               'Wild/index.html.twig',
-              ['programs' => $programs]
+              ['programs' => $programs,
+              'formProg' => $formProg->createView()
+            ]
       );
     }
 
