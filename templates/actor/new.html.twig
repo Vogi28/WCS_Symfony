@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wild Series{% endblock %}
+
+{% block body %}
+    <h1>Ajouter un nouveau acteur</h1>
+
+    {{ include('actor/_form.html.twig') }}
+
+    <a href="{{ path('actor_index') }}">Back to list</a>
+{% endblock %}

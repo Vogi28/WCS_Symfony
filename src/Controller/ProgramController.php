@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/index")
+ * @Route("/program")
  */
 class ProgramController extends AbstractController
 {

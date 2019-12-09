@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wild Series{% endblock %}
+
+{% block body %}
+
+<h1 class="text-center">Toutes les séries</h1>
+
+<table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Serie</th>
+                <th>Nom acteur</th>
+            </tr>
+        </thead>
+        <tbody>
+{% for actor in actors %}
+                <tr>
+                <td>{{ actor.id }}</td>
+                {% for program in actor.programs %}
+                    <td><a href="{{ path('program_show', {'slug' : program.title}) }}">{{ program.title }}</td></a>    
+                {% endfor %}
+                <td>{{ actor.name }}</td>
+                
+                
+                <td>
+                    <a href="{{ path('actor_show', {'id': actor.id}) }}">show</a>
+                    <a href="{{ path('actor_edit', {'id': actor.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+<br>
+<p class="text-center"><a href="{{ path('actor_new') }}" style="font-size:24px; border:1px solid black;border-radius:10px;">Ajouter un Acteur</a></p>
+{% endblock %}

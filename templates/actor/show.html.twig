@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wild Series{% endblock %}
+
+{% block body %}
+
+<table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Serie</th>
+                <th>Nom acteur</th>
+            </tr>
+        </thead>
+        <tbody>
+{% for program in actor.programs %}
+                <tr>
+                <td>{{ actor.id }}</td>
+                <td><a href="{{ path('program_show', {'slug' : program.title}) }}">{{ program.title }}</a></td>    
+                <td>{{ actor.name }}</td>
+                <td>
+                    <a href="{{ path('actor_edit', {'id': actor.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="container">
+        <div class="row tex-center">
+        <p class="col">{{ include('actor/_delete_form.html.twig') }}</p>
+        </div>
+    </div>
+  
+<br>
+<h4 class="text-center"><a href="{{ path('program_index') }}">Back to list</a></h4>
+
+
+{% endblock %}
