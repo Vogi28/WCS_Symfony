@@ -2,26 +2,25 @@
 
 namespace App\Form;
 
-use App\Entity\Season;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Actor;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SeasonType extends AbstractType
+class ActorType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('program', null, ['choice_label' => 'title'])
-        ->add('year')
-        ->add('description');
+            ->add('name')
+            ->add('programs', null, ['choice_label' => 'title'])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Season::class
+            'data_class' => Actor::class,
         ]);
     }
 }
