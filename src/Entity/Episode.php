@@ -19,7 +19,7 @@ class Episode
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Season", inversedBy="episode", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Season", inversedBy="episode")
      * @ORM\JoinColumn(nullable=false)
      */
     private $season;
@@ -40,7 +40,7 @@ class Episode
     private $synopsis;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="episode")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="episode", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $comments;
 

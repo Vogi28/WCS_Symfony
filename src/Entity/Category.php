@@ -25,7 +25,7 @@ class Category
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Program", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="App\Entity\Program", mappedBy="category", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $programs;
 

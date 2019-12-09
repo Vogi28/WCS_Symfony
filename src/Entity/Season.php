@@ -17,7 +17,7 @@ class Season
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Program", inversedBy="season", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Program", inversedBy="season")
      * @ORM\JoinColumn(nullable=false)
      */
     private $program;
@@ -33,7 +33,7 @@ class Season
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Episode", mappedBy="season", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Episode", mappedBy="season", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $episode;
 

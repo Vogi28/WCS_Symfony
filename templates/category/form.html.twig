@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wild Series{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper text-center">
+    <h1>Hello Wilder! ✅</h1> 
+{% if category is not defined %}
+    <h4>Voici les catégories disponible</h4>
+    <div class="container">
+        
+        {% for category in categories %}
+        <div class="row">
+            <p class="col"><a href="{{ path('category_show', {'categoryName': category.name })}}"> {{ loop.index }}.{{ category.name }} </a></p>
+            <p class="col"><a href="{{ path('category_edit', {'id' : category.id}) }}"> Modifier </a><p>
+            <p class="col"><a href="{{ path('category_del', {'id' : category.id}) }}"> Supprimer </a><p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="text-center">
+
+<p class="text-center">Ajouter la catégorie</p>
+{{ form_start(form) }}
+    {{ form_row(form.name) }}
+    <button class="btn">{{ button_label|default('Add') }}</button>
+{{ form_end(form) }}
+{% else %}
+<p class="text-center">Modifier une catégorie</p>
+{{ form_start(form) }}
+    {{ form_row(form.name) }}
+    <button class="btn">{{ button_label|default('Edit') }}</button>
+{{ form_end(form) }}
+{% endif %}
+<div>
+{% endblock %}

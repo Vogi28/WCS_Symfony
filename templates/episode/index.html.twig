@@ -1,0 +1,67 @@
+{# {% extends 'base.html.twig' %}
+
+{% block title %}{{ program.title}}{% endblock %}
+
+{% block body %}
+    <h1>Episode index</h1>
+
+<div class="media">
+  <img class="align-self-start mr-3" src="{{program.poster}}" alt="{{ program.title }} poster">
+  <div class="media-body">
+    <a href="{{ path('wild_show', {'slug': program.title}) }}"><h1 class="mt-0">{{ program.title }}</h1></a>
+    <a href="{{ path('wild_showBySeason', {'id': season.id}) }}">Saison {{ season.id }} - Année {{ season.year}}</a>
+      <details>
+            <summary>Synopsis</summary>
+      {{ season.description }}
+      </details>
+    <p>Categorie : {{ program.category.name }}</p>
+    <p><h3>Episode {{ episode.number }} : {{ episode.title }}</h3></p>
+    <p>{{ episode.synopsis}}</p>
+  </div>
+</div>
+<a href="{{ path('episode_new') }}">Create new</a>
+<br>
+<a href="{{ path('home_index') }}">Retour à l'accueil</a>
+
+{% endblock %} #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Episode index{% endblock %}
+
+{% block body %}
+    <h1>Episode index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Number</th>
+                <th>Synopsis</th>
+                <th>Serie</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for episode in episodes %}
+            <tr>
+                <td>{{ episode.id }}</td>
+                <td>{{ episode.title }}</td>
+                <td>{{ episode.number }}</td>
+                <td>{{ episode.synopsis }}</td>
+                <td>{{ episode.season.program.title }}</td>
+                <td>
+                    <a href="{{ path('episode_show', {'id': episode.id}) }}">show</a>
+                    <a href="{{ path('episode_edit', {'id': episode.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('episode_new') }}">Create new</a>
+{% endblock %}

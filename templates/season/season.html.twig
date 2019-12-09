@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wild Series{% endblock %}
+
+{% block body %}
+
+    <h1 class="mt-0">{{ program.title }}</h1>
+    {% for season in seasons %}
+      <a href="{{ path('season_show', {'title': program.title, 'id': season.id}) }}">Saison {{ loop.index }}</a>
+      <p>{{ season.description }}</p>
+    {% endfor %}
+   
+    </div>
+    <p class="text-center"><a href="{{ path('season_new', {'title' : program.title}) }}" style="font-size:24px; border:1px solid black;border-radius:10px;">Ajouter une saison</a></p>
+  </div>
+</div>
+<br>
+<h4 class="text-center"><a href="{{ path('program_show', {'slug' : program.title}) }}">Back to program</a></h4>
+
+
+{% endblock %}

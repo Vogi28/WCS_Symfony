@@ -26,7 +26,7 @@ class WildController extends AbstractController
      * @Route("/", name="wild_index")
      * @return Response A response instance
      */
-    public function index(ProgramRepository $programRepository, Request $request) :Response
+    public function index(CategoryRepository $categoryRepository, ProgramRepository $programRepository, Request $request) :Response
     {
         $prog = new Program();
         $formProg = $this->createForm(
@@ -55,10 +55,11 @@ class WildController extends AbstractController
               ]
             );
         }
-
+        $category = $categoryRepository->findAll();
         return $this->render(
               'Wild/index.html.twig',
               ['programs' => $programs,
+              'categories' => $category,
               'formProg' => $formProg->createView()
             ]
       );
@@ -67,7 +68,7 @@ class WildController extends AbstractController
     /**
    * @Route("/show/{slug<[a-zA-Z0-9\-\s]+>?}", name="wild_show")
    */
-   public function show(ProgramRepository $programRepository, SeasonRepository $seasonRepository, ?string $slug): Response
+   public function show(CategoryRepository $categoryRepository, ProgramRepository $programRepository, SeasonRepository $seasonRepository, ?string $slug): Response
    {
     
         if (!$slug) {
@@ -85,11 +86,13 @@ class WildController extends AbstractController
             );
         }
 
-        $season= $seasonRepository->findByProgram($program->getId());
+        $season = $seasonRepository->findByProgram($program->getId());
+        $categories = $categoryRepository->findAll();
         return $this->render('Wild/show.html.twig', [
             'program' => $program,
             'slug'  => $slug,
             'seasons' => $season,
+            'categories' => $categories
         ]);
    }
 
@@ -97,7 +100,7 @@ class WildController extends AbstractController
     *
     *@Route("/showBySeason/{id}", name="wild_showBySeason")
     */
-    public function showBySeason(EpisodeRepository $episodeRepository, ProgramRepository $programRepository, Season $seasonEntity)
+    public function showBySeason(CategoryRepository $categoryRepository, EpisodeRepository $episodeRepository, ProgramRepository $programRepository, Season $seasonEntity)
     {
         if(!$seasonEntity)
         {
@@ -108,54 +111,26 @@ class WildController extends AbstractController
         
         $episode = $episodeRepository->findBy(['season' => $seasonEntity->getId()], ['id' => 'asc']);
         $program =$programRepository->findOneById($seasonEntity->getProgram());
-        
-        return $this->render('Wild/season.html.twig', ['season' => $seasonEntity,
+        $categories = $categoryRepository->findAll();
+        return $this->render('season/season.html.twig', ['season' => $seasonEntity,
         'program' => $program,
-        'episodes' => $episode]);
+        'episodes' => $episode,
+        'categories' => $categories]);
     }
-
-    /**
-    * @Route("/category/{categoryName<[a-z0-9\-]+>?}", name="wild_showByCategory")
-    */
-   public function category(CategoryRepository $CategoryRepository, ProgramRepository $programRepository, ?string $categoryName)
-   {
-        if (!$categoryName) {
-            throw $this
-                ->createNotFoundException('No category has been sent to find a program in program\'s table.');
-        }
-        $categoryName = preg_replace(
-            '/-/',
-            ' ', ucwords(trim(strip_tags($categoryName)), "-")
-        );
-        $category = $CategoryRepository->findOneByName($categoryName);
-        
-        if(!$category)
-        {
-            throw $this->createNotFoundException(
-                'No program with '.$categoryName.' category, found in category\'s table.'
-            );
-        }
-        
-        $program = $programRepository->findBy(array('category' => $category->getId()),
-                                    array('id' => 'desc'), 3);
-        
-        return $this->render('Wild/category.html.twig', [
-            'programs' => $program,
-            'category'  => $category,
-        ]);
-   }
 
    /**
     *@Route("/showByEpisode/{id}", name="wild_showByEpisode")
     * @param Episode $episode
     */
-   public function showByEpisode(Episode $episodeEntity, ProgramRepository $programRepository, SeasonRepository $seasonRepository)
+   public function showByEpisode(CategoryRepository $categoryRepository, Episode $episodeEntity, ProgramRepository $programRepository, SeasonRepository $seasonRepository)
    {
        $season = $seasonRepository->findOneById($episodeEntity->getSeason());
        $program = $programRepository->findOneById($season->getProgram());
-       
-       return $this->render('Wild/episode.html.twig', ['episode' => $episodeEntity,
+       $categories = $categoryRepository->findAll();
+
+       return $this->render('episode/episode.html.twig', ['episode' => $episodeEntity,
         'season' => $season,
-        'program' => $program]);
+        'program' => $program,
+        'categories' => $categories]);
    }
 }

@@ -47,4 +47,10 @@ class CategoryRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    // public function autoInc($id)
+    // {
+    //     $query = $this->createQueryBuilder('c')
+    //         ->alter table()
+    // }
 }

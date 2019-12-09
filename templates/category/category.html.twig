@@ -8,18 +8,18 @@
 <div class="container">
     <div class="row">
 {% for program in programs %} 
-    <div class="card col text-center" style="width:400px">
-        <img class="card-img-top" src="{{ program.poster }}" alt="{{ program.title }}">
+    <div class="card col text-center">
+        <a href="{{ path('program_show', {'slug' : program.title})}}"><img class="card-img-top" src="{{ program.poster }}" alt="{{ program.title }}" height="500px"></a>
         <div class="card-body text-center">
             <h4 class="card-title">{{ program.id }} / {{ program.title }}</h4>
             <p class="card-text">{{ program.summary }}</p>
-            <a href="#" class="btn btn-primary">Voir fiche</a>
+            <a href="{{ path('program_show', {'slug' : program.title})}}" class="btn btn-primary">Voir fiche</a>
         </div>
     </div>
 {% endfor %}
     </div>
 </div>
-<a href="{{ path('wild_index') }}">
+<a href="{{ path('home_index') }}">
     Retour à l'index
 </a>
 {% endblock %}

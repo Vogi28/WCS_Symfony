@@ -10,20 +10,21 @@
     <div class="row">
 {% for program in programs %}
             <div class="card col-3 text-center" style="width:400px">
-                <a href="show/{{ program.title }}"><img class="card-img-top" src="{{ program.poster }}" alt="{{ program.title }}" height="700px"></a>
+                <a href="{{ path('program_show', {'slug' : program.title}) }}"><img class="card-img-top" src="{{ program.poster }}" alt="{{ program.title }}" height="700px"></a>
                 <div class="card-body text-center">
                     <h4 class="card-title">{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h4>
                     <p class="card-text">{{ program.summary }}</p>
-                    <a href="/program/{{ program.id }}" class="btn btn-primary">Voir fiche</a>
+                    <a href="{{ path('program_show', {'slug': program.title}) }}" class="btn btn-primary">Voir fiche</a>
                 </div>
+            </div>
+
+        {% else %}
+            <div class="text-center">
+                <p style="font-size:24px">No records found<p>
             </div>
 {% endfor %}
     </div>
 </div>
-<div class="text-center">
-
-    
-<a class="text-center" href="{{ path('home_index') }}">
-    Retour à la page d'accueil
-</a>
+<br>
+<p class="text-center"><a href="{{ path('program_new') }}" style="font-size:24px; border:1px solid black;border-radius:10px;">Ajouter un programme</a></p>
 {% endblock %}
