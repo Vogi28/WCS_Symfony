@@ -39,11 +39,6 @@ class Episode
      */
     private $synopsis;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="episode", cascade={"persist", "remove"}, orphanRemoval=true)
-     */
-    private $comments;
-
     public function __construct()
     {
         $this->comments = new ArrayCollection();

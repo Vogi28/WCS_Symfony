@@ -13,7 +13,7 @@ class ActorType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('programs', null, ['choice_label' => 'title'])
+            ->add('programs', null, ['choice_label' => 'title', 'expanded' => true, 'multiple' => true])
         ;
     }
 
